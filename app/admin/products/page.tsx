@@ -20,18 +20,22 @@ const getProducts = async (page: number, pageSize: number) => {
       category: true
     }
   });
+
   return products;
 };
 
 export type ProductsWithCategory = Awaited<ReturnType<typeof getProducts>>;
 
-// ✅ Server Component recibe searchParams como prop
-const ProductsPage = async ({
-  searchParams
-}: {
-  searchParams: { page?: string };
-}) => {
-  const page = searchParams.page ? parseInt(searchParams.page, 10) : 1;
+type ProductsPageProps = {
+  searchParams?: Record<string, string | string[] | undefined>;
+};
+
+const ProductsPage = async ({ searchParams }: ProductsPageProps) => {
+  const pageParam = searchParams?.page;
+  const page = pageParam
+    ? parseInt(Array.isArray(pageParam) ? pageParam[0] : pageParam, 10)
+    : 1;
+
   const pageSize = 10;
 
   if (page < 0) redirect('/admin/products');
