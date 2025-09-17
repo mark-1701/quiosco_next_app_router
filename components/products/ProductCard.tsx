@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { Product } from '@/app/generated/prisma';
+import { Product } from '@prisma/client';
 import { formatCurrency, getImagePath } from '@/src/utils';
 import AddProductButton from './AddProductButton';
 
