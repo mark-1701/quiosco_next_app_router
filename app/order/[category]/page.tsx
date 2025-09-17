@@ -1,7 +1,7 @@
 import { prisma } from '@/src/lib/prisma';
-import { Product } from '@/app/generated/prisma';
 import ProductCard from '@/components/products/ProductCard';
 import Heading from '@/components/ui/Heading';
+import { Product } from '@prisma/client';
 
 async function getProducts(category: string) {
   // selecciona todos ls productos que pertenecen a esa categoría
