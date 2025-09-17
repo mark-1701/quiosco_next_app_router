@@ -21,7 +21,11 @@ const getProductById = async (id: number) => {
   return product;
 };
 
-const EditProductsPage = async ({ params }: { params: { id: string } }) => {
+type PageProps = {
+  params: { id: string };
+}
+
+const EditProductsPage = async ({ params }: PageProps) => {
   const product = await getProductById(+params.id);
 
   return (
