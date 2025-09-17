@@ -7,17 +7,15 @@ import ProductsPagination from '@/components/products/ProductsPagination';
 import ProductTable from '@/components/products/ProductsTable';
 
 const productCount = async () => {
-  // retorna e el número de productos de la base de datos
   return await prisma.product.count();
 };
 
 const getProducts = async (page: number, pageSize: number) => {
-  // número de registro en donde empieza el salto
   const skip = (page - 1) * pageSize;
 
   const products = await prisma.product.findMany({
-    take: pageSize, // pagina 10 registros
-    skip, // skip: 30; empieza del registro 31 hasta el 40
+    take: pageSize,
+    skip,
     include: {
       category: true
     }
@@ -25,28 +23,22 @@ const getProducts = async (page: number, pageSize: number) => {
   return products;
 };
 
-// infiere el dato que retorna getProducts
 export type ProductsWithCategory = Awaited<ReturnType<typeof getProducts>>;
 
-// nextjs inyecta los parametros
+// ✅ Server Component recibe searchParams como prop
 const ProductsPage = async ({
   searchParams
 }: {
-  searchParams: { page?: string }; // puede ser undefined si no viene
+  searchParams: { page?: string };
 }) => {
-  const page = searchParams.page ? +searchParams.page : 1;
-
+  const page = searchParams.page ? parseInt(searchParams.page, 10) : 1;
   const pageSize = 10;
 
-  // Redireccionar al inicio si es un número negativo
   if (page < 0) redirect('/admin/products');
 
-  const productsData = getProducts(page, pageSize);
-  const totalProductsData = productCount();
-
   const [products, totalProducts] = await Promise.all([
-    productsData,
-    totalProductsData
+    getProducts(page, pageSize),
+    productCount()
   ]);
 
   const totalPages = Math.ceil(totalProducts / pageSize);
