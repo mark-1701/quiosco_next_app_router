@@ -21,11 +21,7 @@ const getProductById = async (id: number) => {
   return product;
 };
 
-interface PageProps {
-  params: { id: string };
-}
-
-const EditProductsPage = async ({ params }: PageProps) => {
+const EditProductsPage = async ({ params }: { params: { id: string } }) => {
   const product = await getProductById(+params.id);
 
   return (
