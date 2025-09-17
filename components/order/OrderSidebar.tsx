@@ -1,5 +1,5 @@
 import { prisma } from '@/src/lib/prisma';
-import { Category } from '@/app/generated/prisma';
+import { Category } from '@prisma/client';
 import CategoryIcon from '../ui/CategoryIcon';
 import Logo from '../ui/Logo';
 
