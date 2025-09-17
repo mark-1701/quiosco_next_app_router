@@ -1,0 +1,36 @@
+import Image from 'next/image';
+import { Product } from '@/app/generated/prisma';
+import { formatCurrency, getImagePath } from '@/src/utils';
+import AddProductButton from './AddProductButton';
+
+type ProductCardProps = {
+  product: Product;
+};
+
+const ProductCard = ({ product }: ProductCardProps) => {
+  const imagePath = getImagePath(product.image);
+
+  return (
+    <div className="border border-gray-100 bg-white">
+      <Image
+        width={488}
+        height={500}
+        src={imagePath}
+        alt={`Imagen platillo ${product.name}`}
+        // quality es la definición de la imágen
+        quality={75}
+      />
+
+      <div className="p-5">
+        <h3 className="text-2xl font-bold">{product.name}</h3>
+        <p className="mt-5 text-4xl font-black text-amber-500">
+          {formatCurrency(product.price)}
+        </p>
+
+        <AddProductButton product={product} />
+      </div>
+    </div>
+  );
+};
+
+export default ProductCard;
