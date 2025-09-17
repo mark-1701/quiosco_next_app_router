@@ -34,14 +34,14 @@ const ProductsPage = async ({
 }: {
   searchParams: Promise<{ page: string }>;
 }) => {
-  const page = +(await searchParams).page || 1;
+  const { page } = (await searchParams) || 1;
 
   const pageSize = 10;
 
   // Redireccionar al inicio si es un número negativo
-  if (page < 0) redirect('/admin/products');
+  if (+page < 0) redirect('/admin/products');
 
-  const productsData = getProducts(page, pageSize);
+  const productsData = getProducts(+page, pageSize);
   const totalProductsData = productCount();
 
   const [products, totalProducts] = await Promise.all([
@@ -68,7 +68,7 @@ const ProductsPage = async ({
       </div>
 
       <ProductTable products={products} />
-      <ProductsPagination page={page} totalPages={totalPages} />
+      <ProductsPagination page={+page} totalPages={totalPages} />
     </>
   );
 };
