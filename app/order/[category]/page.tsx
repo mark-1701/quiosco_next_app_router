@@ -25,8 +25,13 @@ async function getProducts(category: string) {
   - gerateMetadata
 */
 
-const OrderPage = async ({ params }: { params: { category: string } }) => {
-  const products: Product[] = await getProducts(params.category);
+const OrderPage = async ({
+  params
+}: {
+  params: Promise<{ category: string }>;
+}) => {
+  const { category } = await params;
+  const products: Product[] = await getProducts(category);
 
   return (
     <>
