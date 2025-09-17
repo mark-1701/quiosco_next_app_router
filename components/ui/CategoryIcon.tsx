@@ -1,8 +1,8 @@
 'use client';
 
 import Image from 'next/image';
-import { Category } from '@/app/generated/prisma';
 import Link from 'next/link';
+import { Category } from '@prisma/client';
 import { useParams } from 'next/navigation';
 
 type CategoryIconProps = {
