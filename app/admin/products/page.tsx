@@ -34,7 +34,7 @@ const ProductsPage = async ({
 }: {
   searchParams: { page: string };
 }) => {
-  const page = +searchParams.page || 1;
+  const page = (await +searchParams.page) || 1;
 
   const pageSize = 10;
 
