@@ -30,13 +30,11 @@ export type ProductsWithCategory = Awaited<ReturnType<typeof getProducts>>;
 
 // nextjs inyecta los parametros
 const ProductsPage = async ({
-  params
+  searchParams
 }: {
-  params: Promise<{
-    page: string;
-  }>;
+  searchParams: Promise<{ page: string }>; // puede ser undefined si no viene
 }) => {
-  const { page: pageParams } = await params;
+  const { page: pageParams } = await searchParams;
   const page = pageParams ? +pageParams : 1;
 
   const pageSize = 10;
